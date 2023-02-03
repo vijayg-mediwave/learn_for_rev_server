@@ -1,11 +1,12 @@
 const express = require("express");
-const PORT = 5678;
+const env = require("dotenv");
 const app = express();
+env.config();
 
-app.listen(PORT, (err) => {
+app.listen(process.env.PORT || 6789, (err) => {
   if (err) {
-    console.log(`app is not running ${PORT} and ${err}`);
+    console.log(`app is not running ${process.env.PORT} and ${err}`);
   } else {
-    console.log(`app is successfully running in ${PORT}`);
+    console.log(`app is successfully running in ${process.env.PORT}`);
   }
 });
