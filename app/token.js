@@ -12,6 +12,7 @@ const createToken = (payload) => {
 };
 
 const verifyToken = ({ token }) => {
+  //console.log("token=>", token);
   return jwt.verify(token, process.env.JWT_SECRET_KEY);
 };
 
