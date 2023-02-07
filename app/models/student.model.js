@@ -8,19 +8,15 @@ module.exports = (sequelize, Sequelize) => {
     },
     name: {
       type: Sequelize.STRING,
-      //allowNull: false,
     },
     password: {
       type: Sequelize.STRING,
-      //allowNull: false,
     },
     age: {
       type: Sequelize.INTEGER,
-      //allowNull: false,
     },
     course: {
       type: Sequelize.STRING,
-      //allowNull: false,
     },
   });
   return Student;
