@@ -3,13 +3,14 @@ const db = require("../models/index");
 const argon2 = require("argon2");
 const router = express.Router();
 
+const { createToken } = require("../token");
+
 router.post("/signup", async (req, res, next) => {
   try {
     const userNameTaken = await db.students.findOne({
       where: {
         name: req.body.name,
       },
-      //attributes: ["name", "password", "age"],
     });
     if (userNameTaken) {
       return res.status(201).send({
@@ -35,18 +36,38 @@ router.post("/signup", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   try {
-    const studentPayload = {
-      ...req.body,
-    };
-    console.log(studentPayload);
-    const newStudent = await db.students.create(studentPayload);
+    const user = await db.students.findOne({
+      where: {
+        name: req.body.name,
+      },
+      attributes: ["name", "password", "id"],
+    });
+    if (!user) {
+      return res.status(403).send({
+        msg: "kindly pls signup",
+      });
+    }
+    //COMPARE PASSWORD
+    const passwordOk = await argon2.verify(user.password, req.body.password);
 
-    res.status(200).send(newStudent);
-    console.log(newStudent);
+    if (!passwordOk) {
+      return res.status(403).send({
+        msg: "user credntials invalid",
+      });
+    }
+
+    //CFREATE TOKEN
+    const token = createToken({
+      user: user.id,
+    });
+    console.log(token);
+    return res.send({
+      token,
+    });
   } catch (error) {
-    //console.log(error);
+    console.log(error);
     return next(error);
   }
 });
