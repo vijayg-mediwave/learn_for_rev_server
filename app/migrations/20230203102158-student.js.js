@@ -21,7 +21,11 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       course: {
-        type: Sequelize.STRING,
+        type: Sequelize.UUID,
+        refrences: {
+          model: "courses",
+          key: "id",
+        },
       },
     });
   },

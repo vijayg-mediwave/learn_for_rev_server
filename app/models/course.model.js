@@ -9,20 +9,20 @@ module.exports = (sequelize, Sequelize) => {
     courseName: {
       type: Sequelize.STRING,
     },
-    createdByUser: {
-      type: Sequelize.UUID,
-      refrences: {
-        model: "students",
-        key: "id",
-      },
+    duration: {
+      type: Sequelize.STRING,
+    },
+    language: {
+      type: Sequelize.STRING,
     },
   });
 
   Course.associate = (models) => {
-    Course.belongsTo(models.students, {
-      foreignKey: "createdByUser",
-      as: "createdUserInfo",
+    Course.hasOne(models.students, {
+      foreignKey: "course",
+      as: "courseInfo",
     });
   };
+
   return Course;
 };

@@ -3,18 +3,34 @@ const db = require("../models/index");
 const argon2 = require("argon2");
 const router = express.Router();
 
-router.post("/login", async (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   try {
-    const studentPayload = {
-      ...req.body,
+    const userNameTaken = await db.students.findOne({
+      where: {
+        name: req.body.name,
+      },
+      //attributes: ["name", "password", "age"],
+    });
+    if (userNameTaken) {
+      return res.status(201).send({
+        msg: "username already exist",
+      });
+    }
+    //PASWORD HASH
+    const passwordHash = await argon2.hash(req.body.password);
+    //PASSWORD VERIFICATION
+    const passwordSame = await argon2.verify(passwordHash, req.body.password);
+    const userpayload = {
+      name: req.body.name,
+      password: passwordHash,
+      age: req.body.age,
     };
-    console.log(studentPayload);
-    const newStudent = await db.students.create(studentPayload);
-
-    res.status(200).send(newStudent);
-    console.log(newStudent);
+    const newUser = await db.students.create(userpayload);
+    return res.status(201).send({
+      id: newUser.id,
+    });
   } catch (error) {
-    //console.log(error);
+    console.log(error);
     return next(error);
   }
 });

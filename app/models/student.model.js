@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
     },
     course: {
-      type: Sequelize.STRING,
+      type: Sequelize.UUID,
     },
   });
   return Student;

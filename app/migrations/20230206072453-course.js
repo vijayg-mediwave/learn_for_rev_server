@@ -13,12 +13,11 @@ module.exports = {
       courseName: {
         type: Sequelize.STRING,
       },
-      createdByUser: {
-        type: Sequelize.UUID,
-        refrences: {
-          model: "students",
-          key: "id",
-        },
+      duration: {
+        type: Sequelize.INTEGER,
+      },
+      language: {
+        type: Sequelize.STRING,
       },
     });
   },
