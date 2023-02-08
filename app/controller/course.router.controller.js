@@ -2,7 +2,9 @@ const express = require("express");
 const db = require("../models");
 const router = express.Router();
 
-router.post("/", async (req, res, next) => {
+const { checkForUser } = require("../middlewares/auth.middleware");
+
+router.post("/", checkForUser, async (req, res, next) => {
   try {
     const payload = {
       ...req.body,
