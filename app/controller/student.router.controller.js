@@ -84,7 +84,7 @@ router.get("/info", checkForUser, async (req, res, next) => {
         {
           model: db.courses,
           as: "courseInfo",
-          attributes: ["id", "courseName","duration","language"],
+          attributes: ["id", "courseName", "duration", "language"],
         },
       ],
     });
@@ -124,7 +124,7 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-router.put("/:studentid", async (req, res, next) => {
+router.put("/", checkForUser, async (req, res, next) => {
   try {
     const student = await db.students.findOne({
       where: {
@@ -155,5 +155,7 @@ router.put("/:studentid", async (req, res, next) => {
     next(error);
   }
 });
+
+router.put("/");
 
 module.exports = router;

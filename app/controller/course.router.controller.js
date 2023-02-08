@@ -18,7 +18,7 @@ router.post("/", checkForUser, async (req, res, next) => {
   }
 });
 
-router.get("/:courseid", async (req, res, next) => {
+router.get("/:courseid", checkForUser, async (req, res, next) => {
   try {
     const courseInfo = await db.courses.findOne({
       where: {
