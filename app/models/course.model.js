@@ -17,12 +17,12 @@ module.exports = (sequelize, Sequelize) => {
     },
   });
 
-  Course.associate = (models) => {
-    Course.hasOne(models.students, {
-      foreignKey: "course",
-      as: "courseInfo",
-    });
-  };
+  // Course.associate = (models) => {
+  //   Course.hasOne(models.students, {
+  //     foreignKey: "courseName",
+  //     as: "studentInfo",
+  //   });
+  // };
 
   return Course;
 };

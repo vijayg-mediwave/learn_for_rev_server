@@ -74,12 +74,21 @@ router.post("/login", async (req, res, next) => {
 
 router.get("/info", checkForUser, async (req, res, next) => {
   try {
+    //console.log(res.locals.student);
     const sutdentData = await db.students.findOne({
       where: {
         id: res.locals.student,
       },
-      attributes: ["id", "name", "age", "createdAt","course"],
+      attributes: ["id", "name", "age", "createdAt", "course"],
+      include: [
+        {
+          model: db.courses,
+          as: "courseInfo",
+          attributes: ["id", "courseName","duration","language"],
+        },
+      ],
     });
+    console.log(sutdentData);
     const json = sutdentData.toJSON();
     return res.status(200).send(json);
   } catch (error) {

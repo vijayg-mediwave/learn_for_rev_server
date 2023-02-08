@@ -19,5 +19,12 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.UUID,
     },
   });
+
+  Student.associate = (models) => {
+    Student.belongsTo(models.courses, {
+      foreignKey: "course",
+      as: "courseInfo",
+    });
+  };
   return Student;
 };

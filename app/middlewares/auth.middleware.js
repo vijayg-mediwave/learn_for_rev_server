@@ -2,7 +2,7 @@ const { verifyToken } = require("../token");
 
 const checkForUser = (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  console.log(authHeader);
+  //console.log(authHeader);
   if (!authHeader) {
     return res.status(403).send({
       message: "unauthorised: user id not found",

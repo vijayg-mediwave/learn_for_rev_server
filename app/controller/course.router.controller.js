@@ -18,4 +18,25 @@ router.post("/", checkForUser, async (req, res, next) => {
   }
 });
 
+router.get("/:courseid", async (req, res, next) => {
+  try {
+    const courseInfo = await db.courses.findOne({
+      where: {
+        id: req.params.courseid,
+      },
+      // include: [
+      //   {
+      //     model: db.students,
+      //     as: "studentInfo",
+      //     attributes: ["courseName"],
+      //   },
+      // ],
+    });
+    console.log(courseInfo);
+    res.status(201).send(courseInfo);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
